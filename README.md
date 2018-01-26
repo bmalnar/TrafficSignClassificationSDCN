@@ -10,7 +10,7 @@ The repository contains the jupyter notebook implementing training and testing o
 
 ### Files and directories content
 - `TrafficSignClassifier.ipynb` is a jupyter notebook containing all of the code, including pre-processing of the data, training the model, testing the model on the test dataset, and finally testing on several pictures downloaded from the web. 
-- `test_images` contains images downloaded from the web, which are used to test the model (addition to the test dataset). 
+- `test_images` contains images downloaded from the web, which are used to test the model (in addition to the test dataset). 
 - `writeup.md` provides more details on the notebook and analyzes the results. 
 
 ### How to run the code
@@ -25,10 +25,10 @@ The code has been tested using:
 - TensorFlow 1.4.1
 
 ### Known limitations and issues
-- GTSRB contains only the images of the traffic signs that occupy the entire picutre space. That is also how the CNN learned to classify the traffic signs it has not yet seen. That is why you should not expect the new unseen pictures to be correctly classified if they show the traffic sign in the larger content, e.g. if your input picture contains more than just the traffic sign. In that case, the picture should be cropped to contain only the traffic sign, and only then fed to the model. 
+- GTSRB contains only the images of the traffic signs that occupy the entire picutre space, and that is also how our model learned to classify the traffic signs it has not yet seen. That is why you should not expect the new unseen pictures to be correctly classified if they show the traffic sign in the larger context, e.g. if your input picture contains more than just the traffic sign. In that case, the picture should be cropped to contain only the traffic sign, and only then fed to the model for classification. 
 
 ### Where to find more information
-- The file `writeup.md` provides more information on the processing pipeline
+- The file `writeup.md` provides more information on the training and testing process. 
 - More information on the original assignment can be found in the original [github repository](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project)
 
 
