@@ -118,21 +118,36 @@ The architecture was not changed during these experiments. The approach was to p
 For additional testing, several images were downloaded from the internet and placed in the directory `test_images`:
 
 ```test_images/11_rightofway.jpg```
-<img src="writeup_images/11_rightofway.jpg" width="480" alt="RGB images" />
+
+<img src="test_images/11_rightofway.jpg" width="200" alt="RGB images" />
+
 ```test_images/14_stop.jpg```
-<img src="writeup_images/14_stop.jpg" width="480" alt="RGB images" />
+
+<img src="test_images/14_stop.jpg" width="200" alt="RGB images" />
+
 ```test_images/17_noentry.jpg```
-<img src="writeup_images/17_noentry.jpg" width="480" alt="RGB images" />
+
+<img src="test_images/17_noentry.jpg" width="200" alt="RGB images" />
+
 ```test_images/17_noentry_crop.jpg```
-<img src="writeup_images/17_noentry_crop.jpg" width="480" alt="RGB images" />
+
+<img src="test_images/17_noentry_crop.jpg" width="200" alt="RGB images" />
+
 ```test_images/23_slippery.jpg```
-<img src="writeup_images/23_slippery.jpg" width="480" alt="RGB images" />
+
+<img src="test_images/23_slippery.jpg" width="200" alt="RGB images" />
+
 ```test_images/23_slippery_crop.jpg```
-<img src="writeup_images/23_slippery_crop.jpg" width="480" alt="RGB images" />
+
+<img src="test_images/23_slippery_crop.jpg" width="200" alt="RGB images" />
+
 ```test_images/25_roadwork.jpg```
-<img src="writeup_images/25_roadwork.jpg" width="480" alt="RGB images" />
+
+<img src="test_images/25_roadwork.jpg" width="200" alt="RGB images" />
+
 ```test_images/25_roadwork_2.jpg```
-<img src="writeup_images/25_roadwork_2.jpg" width="480" alt="RGB images" />
+
+<img src="test_images/25_roadwork_2.jpg" width="200" alt="RGB images" />
 
 
 The images are named in the way that the names begin with the number designating the class ID, as defined in the `signnames.csv` file. In that way, we do not have to store the labels separately, but we simply extract them from the file names. 
