@@ -1,10 +1,10 @@
-# **Traffic Sign Recognition** 
+# **Traffic Sign Classification** 
 
 ## Writeup
 
 ---
 
-**Build a Traffic Sign Recognition Project**
+**Build a Traffic Sign Classification Project**
 
 The goals / steps of this project are the following:
 * Load the data set (see below for links to the project data set)
@@ -62,26 +62,18 @@ We can see that the number of images per class in the training dataset varies by
 
 ### Design and Test a Model Architecture
 
-#### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+#### Pre-processing the image data
 
-As a first step, I decided to convert the images to grayscale because ...
+All three datasets (training, validation and testing) were pre-processed in two steps:
+- Convert from RGB to grayscale using the method `rgb2gray`
+- Normalize the grayscale images to have zero mean and unit variance using the method `normalize`
 
-Here is an example of a traffic sign image before and after grayscaling.
+Conversion from RGB to grayscale is typically done to make the models simpler and smaller. However, sometimes having the color information could help the network to learn to classify better, if the color is indeed a decisive factor between the classes. In the case of traffic signs, it is probably not necessary to have the color information, because the traffic signs can be distinguished well even if the images are converted to grayscale for the purpose of classification. This is after all confirmed with the training and testing processes, which produce good results on grayscale images. 
 
-![alt text][image2]
+Normalization is typically done to ensure that the input data to the network has similar distribution, which helps the network to converge faster during training. If normalization isn't done, we could have a situation that very bright and very dark images affect the training process negatively because the brightness factor may be something that the network also tries to learn, and that is not what we want. 
 
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
-
+<img src="writeup_images/rgb.png" width="480" alt="RGB images" />
+<img src="writeup_images/grayscale.png" width="480" alt="Grayscale images" />
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
