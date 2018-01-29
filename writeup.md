@@ -72,7 +72,14 @@ Conversion from RGB to grayscale is typically done to make the models simpler an
 
 Normalization is typically done to ensure that the input data to the network has similar distribution, which helps the network to converge faster during training. If normalization isn't done, we could have a situation that very bright and very dark images affect the training process negatively because the brightness factor may be something that the network also tries to learn, and that is not what we want. 
 
+Below, we can see the result of changing the images from RGB to grayscale. We first show 42 RGB images from 42 different classes, and then we show the same images converted to RGB. We show only 42 images even though there are 43 classes, just to have the nice 7x6 grid for displaying the images (this is dufficient for illustration purposes). 
+
+- RGB images:
+
 <img src="writeup_images/rgb.png" width="480" alt="RGB images" />
+
+- Grayscale images:
+
 <img src="writeup_images/grayscale.png" width="480" alt="Grayscale images" />
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
