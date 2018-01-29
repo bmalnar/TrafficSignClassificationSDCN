@@ -93,7 +93,7 @@ For training, several different experiments were performed to investigate the im
 
 The architecture was not changed during these experiments. The approach was to pick a reasonable architecture from the beginning (which is relatively small and simple) and to try to train it to get the desired accuracy. The architecture can be made deeper, with more layers, but this was eventually not necessary. 
 
-During training, at the end of every epoch, the accuracy of the model is evaluated using the validation dataset. In other words, at the end of each epoch we have the estimate of how accurate the model is on the data it has not seen during the training. The accuracy is around 0.4 after the first epoch, over 80% after 5 epochs, over 90% after 12 epochs, and then slowly goes up to about the peak of 94%. At the end of the training, we evaluate the accuracy once more using the test dataset. The accuracy in that case is 94.6%, which exceeds 93% (which was set as a requirement at the beginning). 
+During training, at the end of every epoch, the accuracy of the model is evaluated using the validation dataset. In other words, at the end of each epoch we have the estimate of how accurate the model is on the data it has not seen during the training. The accuracy is around 0.4 after the first epoch, over 80% after 5 epochs, over 90% after 12 epochs, and then slowly goes up to about the peak of 94%. At the end of the training, we evaluate the accuracy once more using the test dataset. The accuracy in that case is **94.6%**, which exceeds 93% (which was set as a requirement at the beginning). 
 
 ### Testing the model on new images
 
@@ -146,6 +146,8 @@ Image correctly classified: 23_slippery_crop.jpg as class 23
 Image correctly classified: 25_roadwork.jpg as class 25
 Image correctly classified: 25_roadwork_2.jpg as class 25**
 ```
+
+We can see that the model accuracy on these new images is **75%** (6 out of 8 classfied correctly). This number is lower than the accuracy of 94.6% achieved on the test dataset, but we only have 8 images here, which may be statistically not significant enough to compare the two numbers. 
 
 The reason why the images `17_noentry.png` and `23_slippery.png` are not correctly classified is most likely due to the fact that these images do not just show the traffic sign in a zoomed-in kind of way, but they also have substantial area around the signs, which show branches and leaves. The training dataset, on the other hand, shows only traffic sign images where the signs occupy the entire area of the images, and nothing else is shown. So the model learns to recognize the signs only in the absence of other content. That is why I think `17_noentry.jpg` is classified incorrectly, but `17_noentry_crop.jpg` is classified correctly. The latter image shows the same sign as the former, but simply the content around the sign itself has been removed. The situation is the same with `23_slippery.jpg` and `23_slippery_crop.jpg`. 
 
