@@ -2,8 +2,6 @@
 
 ## Writeup
 
----
-
 **Build a Traffic Sign Classification Project**
 
 The goals / steps of this project are the following:
@@ -14,35 +12,13 @@ The goals / steps of this project are the following:
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
-
-
-
-
-[//]: # (Image References)
-
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
-
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
 ---
 ### Writeup / README
 
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
-
-
-
-
-
+This is a summary of the work done to train the traffic sign classifier based on a deep neural network. The Github project is located [here] (https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Summary & Exploration
 
@@ -91,14 +67,18 @@ My final model consisted of the following layers:
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Convolution 5x5     	| 1x1 stride, VALID padding, outputs 28x28x6 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
+| Convolution 5x5     	| 1x1 stride, VALID padding, outputs 10x10x16 	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
+| Fully connected		| On the flat input, output is 120        									|
+| RELU					|												|
+| Fully connected		| Output is 84        									|
+| RELU					|												|
+| Fully connected		| Output is 43        									|
+| Softmax				|     									|
  
  
 #### The training process
@@ -112,6 +92,8 @@ For training, several different experiments were performed to investigate the im
 - **Number of training epochs:** increase the number of training epochs. The initial number of epochs was 10, but it was eventually increased to 60. The runtime penalty is not significant because the training procedure runs relatively fast anyway (about 2-3 minutes for 60 epochs). 
 
 The architecture was not changed during these experiments. The approach was to pick a reasonable architecture from the beginning (which is relatively small and simple) and to try to train it to get the desired accuracy. The architecture can be made deeper, with more layers, but this was eventually not necessary. 
+
+During training, at the end of every epoch, the accuracy of the model is evaluated using the validation dataset. In other words, at the end of each epoch we have the estimate of how accurate the model is on the data it has not seen during the training. The accuracy is around 0.4 after the first epoch, over 80% after 5 epochs, over 90% after 12 epochs, and then slowly goes up to about the peak of 94%. At the end of the training, we evaluate the accuracy once more using the test dataset. The accuracy in that case is 94.6%, which exceeds 93% (which was set as a requirement at the beginning). 
 
 ### Testing the model on new images
 
@@ -152,47 +134,55 @@ For additional testing, several images were downloaded from the internet and pla
 
 The images are named in the way that the names begin with the number designating the class ID, as defined in the `signnames.csv` file. In that way, we do not have to store the labels separately, but we simply extract them from the file names. 
 
+As we test the model with these immages, we can see the following output:
 
-Here are five German traffic signs that I found on the web:
+```
+Image correctly classified: 11_rightofway.jpg as class 11
+Image correctly classified: 14_stop.jpg as class 14
+Image incorrectly classified: 17_noentry.jpg as class 0
+Image correctly classified: 17_noentry_crop.jpg as class 17
+Image incorrectly classified: 23_slippery.jpg as class 38
+Image correctly classified: 23_slippery_crop.jpg as class 23
+Image correctly classified: 25_roadwork.jpg as class 25
+Image correctly classified: 25_roadwork_2.jpg as class 25**
+```
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+The reason why the images `17_noentry.png` and `23_slippery.png` are not correctly classified is most likely due to the fact that these images do not just show the traffic sign in a zoomed-in kind of way, but they also have substantial area around the signs, which show branches and leaves. The training dataset, on the other hand, shows only traffic sign images where the signs occupy the entire area of the images, and nothing else is shown. So the model learns to recognize the signs only in the absence of other content. That is why I think `17_noentry.jpg` is classified incorrectly, but `17_noentry_crop.jpg` is classified correctly. The latter image shows the same sign as the former, but simply the content around the sign itself has been removed. The situation is the same with `23_slippery.jpg` and `23_slippery_crop.jpg`. 
 
-The first image might be difficult to classify because ...
+To investigate how confident the model is when predicting these two images, we can look at the following output from notebook:
 
-#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+```
+Image 11_rightofway.jpg predicted as 11
+Top 5 classes [[11 30 21 12 27]]
+Top 5 values [[ 0.92752033  0.06129503  0.00334978  0.00217773  0.00173397]]
 
-Here are the results of the prediction:
+Image 14_stop.jpg predicted as 14
+Top 5 classes [[14 33 13 17 34]]
+Top 5 values [[ 0.91339582  0.01729976  0.01514864  0.0130596   0.00775108]]
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+Image 17_noentry.jpg predicted as 0
+Top 5 classes: 0  1  8 33 36
+Top 5 values: 0.25731021  0.10710046  0.09363007  0.0816074   0.05592449
 
+Image 17_noentry_crop.jpg predicted as 17
+Top 5 classes: 17  9 33 16 35]]
+Top 5 values: 0.48428649  0.17560029  0.10189056  0.09391738  0.05823837
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+Image 23_slippery.jpg predicted as 38
+Top 5 classes: 38 25 31 11 23
+Top 5 values: 0.29157507  0.14607479  0.12122528  0.0940006   0.04848812
 
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+Image 23_slippery_crop.jpg predicted as 23
+Top 5 classes: 23 11 19 21 31
+Top 5 values: 0.41349074  0.19613142  0.11798017  0.07410568  0.069729  
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+Image 25_roadwork.jpg predicted as 25
+Top 5 classes: 25 31 29 21 30
+Top 5 values: 0.62263769  0.08411928  0.05425425  0.04839035  0.04740327
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+Image 25_roadwork_2.jpg predicted as 25
+Top 5 classes: 25 29 24 22 18
+Top 5 values: 0.98748207  0.00331216  0.00220919  0.00131308  0.00117823
+```
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
+We can see that some correct predictions have a very high probability of over 90%, but some have less than 50%. Compared to the cases where the predictions are incorrect, we still see that the output probabilities are relatively higher, and the margins with the second highest probabilities is relatively wider, compared to mis-predictions. 
