@@ -2,8 +2,6 @@
 
 ## Writeup
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
 ---
 
 **Build a Traffic Sign Recognition Project**
@@ -15,6 +13,9 @@ The goals / steps of this project are the following:
 * Use the model to make predictions on new images
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
+
+
+
 
 
 [//]: # (Image References)
@@ -38,24 +39,26 @@ The goals / steps of this project are the following:
 
 You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
+
+
+
+
+
 ### Data Set Summary & Exploration
 
-#### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+The dataset exploration was done in a simple way using the Numpy library, as the dataset loaded using pickle is stored as numpy arrays. 
 
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is 32 by 32 pixels
+* The number of unique classes/labels in the data set is 43
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+The distribution of the images in the training dataset is shown in following picture. 
 
-#### 2. Include an exploratory visualization of the dataset.
+<img src="writeup_images/num_examples_per_class.png" width="480" alt="Number of Examples per Class" />
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
-
-![alt text][image1]
+We can see that the number of images per class in the training dataset varies by approximately 10x between the classes with the most training examples and the classes with the least. This is not an ideal situation, because the network may learn to work better on the classes with more examples, at the expense of the classes with fewer examples. Ideally, all classes that we want the network to learn should be represented about equally, in terms of the number of images, variety in the images, etc. 
 
 ### Design and Test a Model Architecture
 
