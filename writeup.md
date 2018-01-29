@@ -82,7 +82,9 @@ Below, we can see the result of changing the images from RGB to grayscale. We fi
 
 <img src="writeup_images/grayscale.png" width="480" alt="Grayscale images" />
 
-#### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+#### The model architecture
+
+The neural network chosen for this work resembles the LeNet network architecture, and has the following layers:
 
 My final model consisted of the following layers:
 
@@ -98,33 +100,20 @@ My final model consisted of the following layers:
 |						|												|
 |						|												|
  
-
-
-#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
-
-To train the model, I used an ....
-
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
-
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
  
+#### The training process
 
-### Test a Model on New Images
+For training, several different experiments were performed to investigate the impact of different settings and hyperparameters for achieving the desired accuracy. The list of settings experimented with includes the following:
+- **Input data format:** use RGB images vs. grayscale without normalization vs. grayscale with normalization. Between the three different options, the last one was a clear winner to get the training process and testing converge quickly. Therefore, the model uses grayscale and normalized pictures (both for training and testing). 
+- **Learning rate:** use a constant learning rate vs. a decaying learning rate. It is often recommended that the learning rate is best lowered later in the training process, to achieve faster learning rate at the beginning and more precise convergence later. However, with the experiments performed here, it was noticed that the best convergence happens with the constant learning rate. 
+- **Optimizers:** use different optimizers (AdamOptimizer, RMSPropOptimizer, GradientDescentOptimizer). The impact of selecting different optimizers did not appear to influence the results, so eventually AdamOptimizer was chosen for the reasonce mostly involving prior experiences with that optimizer. 
+- **L2 loss:** use L2 loss for weights vs. do not use L2 loss. Using L2 loss was a clear winner here, as the accuracy for both validation and testing datasets was increased by several percentages over the case where L2 loss was not used. 
+- **Dropout:** use dropout for conv layers and FC layers vs. use dropout only for conv layers vs. do not use dropout at all. Using dropout only for conv layers was the better choise vs. using dropout also for the FC layers or not using dropout at all, resulting in the improvement in the validaton adn testing accuracy of several percentage points. 
+- **Number of training epochs:** increase the number of training epochs. The initial number of epochs was 10, but it was eventually increased to 60. The runtime penalty is not significant because the training procedure runs relatively fast anyway (about 2-3 minutes for 60 epochs). 
+
+The architecture was not changed during these experiments. The approach was to pick a reasonable architecture from the beginning (which is relatively small and simple) and to try to train it to get the desired accuracy. The architecture can be made deeper, with more layers, but this was eventually not necessary. 
+
+### Testing the model on new images
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
